@@ -74,5 +74,5 @@ while newDef is None:
         continue
 
 # tweet markov-generated sentence
-tweet = randomWord + "\n" + newDef
+tweet = "#" + randomWord + "\n" + newDef + "\n#UrbanDictionary"
 tp.update_status(tweet)
