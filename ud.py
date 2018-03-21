@@ -36,7 +36,7 @@ for i in noBullet:
     # each word is inside <li> tags  
     words = i.find_all('li')
     for word in words:
-        newWords.append(word.get_text())
+        newWords.append(word.get_text().replace("\n",""))
 
 newDef = None
 
@@ -58,8 +58,10 @@ while newDef is None:
             definition = "1."
             definition = i.get_text()
             definition = definition.replace("&apos;", "'")
+            definition = definition.replace("\n", " ")
             # some definitions have lists in 1. 2. format
-            # these mess up markov chains; use regex to remove period
+            # that mess up markov chains; use regex to remove period
+            #definition = re.sub(r'\d.(?!\d)', '', definition)
             definition = re.sub('((\d+)[\.])(?!([\d]+))','\g<2>',definition)
             mark += (definition + " ")
 
