@@ -36,7 +36,7 @@ for i in noBullet:
     # each word is inside <li> tags  
     words = i.find_all('li')
     for word in words:
-        newWords.append(word.get_text().replace("\n",""))
+        newWords.append(word.get_text().rstrip())
 
 newDef = None
 
@@ -55,10 +55,9 @@ while newDef is None:
         mark = ""
 
         for i in meaning:
-            definition = "1."
             definition = i.get_text()
             definition = definition.replace("&apos;", "'")
-            definition = definition.replace("\n", " ")
+            definition = definition.rstrip()
             # some definitions have lists in 1. 2. format
             # that mess up markov chains; use regex to remove period
             #definition = re.sub(r'\d.(?!\d)', '', definition)
@@ -76,5 +75,5 @@ while newDef is None:
         continue
 
 # tweet markov-generated sentence
-tweet = "#" + randomWord + "\n" + newDef + "\n#UrbanDictionary"
+tweet = "#" + randomWord.replace(" ", "") + "\n" + newDef + "\n#UrbanDictionary"
 tp.update_status(tweet)
