@@ -3,6 +3,7 @@ import requests
 import random
 from bs4 import BeautifulSoup
 import time
+import time
 import markovify
 import tweepy
 import re
@@ -36,7 +37,7 @@ for i in noBullet:
     # each word is inside <li> tags  
     words = i.find_all('li')
     for word in words:
-        newWords.append(word.get_text().rstrip())
+        newWords.append(word.get_text().strip())
 
 newDef = None
 
@@ -56,11 +57,10 @@ while newDef is None:
 
         for i in meaning:
             definition = i.get_text()
-            definition = definition.replace("&apos;", "'")
-            definition = definition.rstrip()
+            definition = html.unescape(definition)
+            definition = definition.strip()
             # some definitions have lists in 1. 2. format
             # that mess up markov chains; use regex to remove period
-            #definition = re.sub(r'\d.(?!\d)', '', definition)
             definition = re.sub('((\d+)[\.])(?!([\d]+))','\g<2>',definition)
             mark += (definition + " ")
 
